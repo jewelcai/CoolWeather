@@ -172,7 +172,7 @@ public class ChooseAreaActivity extends ActionBarActivity {
 	   String address;
 	   if(!TextUtils.isEmpty(code))
 	   {
-		   address= "http://www.weather.com.cn/data/list3/city"+code+".xml";
+		   address= "http://www.weather.com.cn/data/list3/city" + code + ".xml";
 	   }else{
 		   address="http://www.weather.com.cn/data/list3/city.xml";
 		   
@@ -184,7 +184,7 @@ public class ChooseAreaActivity extends ActionBarActivity {
 		public void onFinish(String response) {
 			// TODO Auto-generated method stub
 			boolean result =false;
-			if(type.equals("province"))
+			if("province".equals(type))
 			{
 				result= Utility.handleProvinceResponse(coolweatherDb, response);
 			}else if(type.equals("city")) {

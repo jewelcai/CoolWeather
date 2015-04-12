@@ -42,7 +42,7 @@ public class CoolWeatherDB {
 		{
 			ContentValues values = new ContentValues();
 			values.put("province_name", province.getProvinceName());
-			values.put("provice_code", province.getProvinceCode());
+			values.put("province_code", province.getProvinceCode());
 			db.insert("Province", null, values);
 			
 		}
@@ -88,7 +88,8 @@ public class CoolWeatherDB {
 	public List<City> loadCities(int provinceId)
 	{
 		List<City> list = new ArrayList<City>();
-		Cursor cursor = db.query("City", null, "province_id=?", new String[]{String.valueOf(provinceId)}, null,null, null);
+		Cursor cursor = db.query("City", null, 
+				"province_id= ?", new String[] {String.valueOf(provinceId)}, null,null, null);
 		if (cursor.moveToFirst())
 		{
 			do {
@@ -113,10 +114,10 @@ public class CoolWeatherDB {
 		if(county != null)
 		{
 			ContentValues values = new ContentValues();
-			values.put("city_name", county.getCountyName());
-			values.put("city_code", county.getCountyCode());
-			values.put("province_id", county.getCityId());
-			db.insert("City", null, values);
+			values.put("county_name", county.getCountyName());
+			values.put("county_code", county.getCountyCode());
+			values.put("city_id", county.getCityId());
+			db.insert("County", null, values);
 			
 		}
 		

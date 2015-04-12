@@ -97,48 +97,39 @@ public class Utility {
     }
     
     
-    public static void handleWeatherResponse(Context context,String response)
-    {
-    	try {
-			JSONObject jsonObject= new JSONObject(response);
-			JSONObject weatherInfo = jsonObject.getJSONObject("weaterinfo");
+    public static void handleWeatherResponse(Context context, String response) {
+		try {
+			JSONObject jsonObject = new JSONObject(response);
+			JSONObject weatherInfo = jsonObject.getJSONObject("weatherinfo");
 			String cityName = weatherInfo.getString("city");
-			String weatherCode = weatherInfo.getString("citycode");
-			String temp1= weatherInfo.getString("temp1");
+			String weatherCode = weatherInfo.getString("cityid");
+			String temp1 = weatherInfo.getString("temp1");
 			String temp2 = weatherInfo.getString("temp2");
 			String weatherDesp = weatherInfo.getString("weather");
 			String publishTime = weatherInfo.getString("ptime");
-			saveWeatherInfo(context, cityName, 
-		    		weatherCode,temp1,temp2,
-		    		weatherDesp,publishTime);
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			saveWeatherInfo(context, cityName, weatherCode, temp1, temp2,
+					weatherDesp, publishTime);
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-    	
-    }
-    
-    public static void saveWeatherInfo(Context context, String cityName, 
-    		String weatherCode,String temp1,String temp2,
-    		String weatherDesp,String publishTime)
-    {
-    	SimpleDateFormat sdf= new SimpleDateFormat("yyyyƒÍM‘¬d»’",Locale.CHINA);
-    	
-    	SharedPreferences.Editor editor= PreferenceManager.getDefaultSharedPreferences(context).edit();
-    	editor.putBoolean("city_selected", true);
-    	editor.putString("city_name", cityName);
-    	editor.putString("weather_code", weatherCode);
-    	editor.putString("temp1", temp1);
-    	editor.putString("temp2", temp2);
-    	editor.putString("weatherdesp", weatherDesp);
-    	editor.putString("publish_time", publishTime);
-    	editor.putString("current_time", sdf.format(new Date()));
-    	editor.commit();
-    	
-    }
-    
-    
+	}
+
 	
-	
+	public static void saveWeatherInfo(Context context, String cityName,
+			String weatherCode, String temp1, String temp2, String weatherDesp,
+			String publishTime) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/M/d", Locale.CHINA);
+		SharedPreferences.Editor editor = PreferenceManager
+				.getDefaultSharedPreferences(context).edit();
+		editor.putBoolean("city_selected", true);
+		editor.putString("city_name", cityName);
+		editor.putString("weather_code", weatherCode);
+		editor.putString("temp1", temp1);
+		editor.putString("temp2", temp2);
+		editor.putString("weather_desp", weatherDesp);
+		editor.putString("publish_time", publishTime);
+		editor.putString("current_date", sdf.format(new Date()));
+		editor.commit();
+	}
+
 }

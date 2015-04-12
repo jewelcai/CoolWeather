@@ -69,7 +69,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 			showWeather();
 		}
 	}
-	private void queryWeatherCode(String countyCode)//query weather code
+	private void queryWeatherCode(String countyCode) //query weather code
 	{
 		String address = "http://www.weather.com.cn/data/list3/city"
 				+countyCode+ ".xml";
@@ -81,7 +81,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 	
 	private void queryWeatherInfo(String weatherCode)
 	{
-		String address= "http://www.weather.com.cn/data/cityinfo"
+		String address= "http://www.weather.com.cn/data/cityinfo/"
 				+ weatherCode+".html";
 		queryFromServer(address,"weatherCode");
 		
@@ -146,7 +146,7 @@ public class WeatherActivity extends Activity implements OnClickListener{
 		temp1Text.setText(prefs.getString("temp1", ""));
 		temp2Text.setText(prefs.getString("temp2", ""));
 		weatherDespText.setText(prefs.getString("weather_desp", ""));
-		publishText.setText("today"+prefs.getString("publisn_time", "")+"published");
+		publishText.setText("今天"+prefs.getString("publish_time", "")+"发布");
 		currentDateText.setText(prefs.getString("current_date", ""));
 		weatherInfoLayout.setVisibility(View.VISIBLE);
 		cityNameText.setVisibility(View.VISIBLE);
