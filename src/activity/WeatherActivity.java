@@ -7,18 +7,24 @@ import android.widget.*;
 import com.example.coolweather.R;
 
 
-import android.support.v7.app.ActionBarActivity;
-import android.text.TextUtils;
 
+
+
+
+
+
+import android.text.TextUtils;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.LinearLayout;
 
-public class WeatherActivity extends ActionBarActivity {
+public class WeatherActivity extends Activity implements OnClickListener{
    private LinearLayout weatherInfoLayout;
    private TextView cityNameText;
    private TextView publishText;
@@ -26,7 +32,8 @@ public class WeatherActivity extends ActionBarActivity {
    private TextView temp1Text;
    private TextView temp2Text;
    private TextView currentDateText;
-   
+   private Button switchCity;
+   private Button refreshWeather;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,6 +46,11 @@ public class WeatherActivity extends ActionBarActivity {
 		temp1Text = (TextView) findViewById(R.id.temp1);
 		temp2Text= (TextView) findViewById(R.id.temp2);
 		currentDateText = (TextView) findViewById(R.id.current_date);
+		switchCity= (Button) findViewById(R.id.switch_city);
+		refreshWeather=(Button) findViewById(R.id.refresh_weather);
+	    switchCity.setOnClickListener(this);
+	    refreshWeather.setOnClickListener(this);
+		
 		String countyCode = getIntent().getStringExtra("county_code");
 		
 		if(!TextUtils.isEmpty(countyCode))
@@ -138,5 +150,35 @@ public class WeatherActivity extends ActionBarActivity {
 		cityNameText.setVisibility(View.VISIBLE);
 		
 	}
+	
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch(v.getId())
+		{
+		case R.id.switch_city:
+			Intent intent = new Intent (this, ChooseAreaActivity.class);
+			intent.putExtra("from_weather_activity", true);
+			startActivity(intent);
+			finish();
+			break;
+		case R.id.refresh_weather: 
+			publishText.setText("syching");
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+			String weatherCode = prefs.getString("weather_code", "");
+			if(!TextUtils.isEmpty(weatherCode))
+			{
+				queryWeatherInfo(weatherCode);
+				
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	
+	
+	
+	
 	
 }
